@@ -8,7 +8,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-
 struct Header {
     bool     valid=false;          // did magic bytes match?
     uint32_t file_size=0;      // size of secret file

@@ -38,7 +38,6 @@ std::vector<uint8_t> build_header(const std::string& filename, uint32_t file_siz
 
     //minimum header size is 15 bytes when file name is 1 char with no extention
     return header;
-
 }
 
 
