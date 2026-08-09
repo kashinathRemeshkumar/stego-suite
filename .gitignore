@@ -7,9 +7,10 @@ env/
 .DS_Store
 EOF
 Makefile
+.gitignore
 *.mp3
 *.mp4
 *.png
 *.jpeg
 *.jpg
-*.gitignore
+
