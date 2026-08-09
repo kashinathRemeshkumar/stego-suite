@@ -12,3 +12,4 @@ Makefile
 *.png
 *.jpeg
 *.jpg
+*.gitignore
