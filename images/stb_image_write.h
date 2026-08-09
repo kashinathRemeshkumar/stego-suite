@@ -328,7 +328,6 @@ static FILE *stbiw__fopen(char const *filename, char const *mode)
 #endif
    return f;
 }
-
 static int stbi__start_write_file(stbi__write_context *s, const char *filename)
 {
    FILE *f = stbiw__fopen(filename, "wb");

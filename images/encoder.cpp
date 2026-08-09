@@ -42,7 +42,6 @@ std::vector<uint8_t> build_header(const std::string& filename, uint32_t file_siz
 }
 
 
-
 void embed_secret(const std::vector<uint8_t>& secret,const std::string& secret_path , uint8_t* image,int height,int width){
 
     int index=0;
@@ -55,7 +54,6 @@ void embed_secret(const std::vector<uint8_t>& secret,const std::string& secret_p
     std::vector<uint8_t> stream;
     stream.insert(stream.begin(),header.begin(),header.end()); //copy header to stream
     stream.insert(stream.end(),secret.begin(),secret.end());  //copy secret to stream 
-
 
 
     if(image_size<stream.size()*8){
@@ -81,7 +79,6 @@ std::vector<uint8_t> get_secret_file(const std::string& path){
         throw std::runtime_error("cannot open file "+ path);
     }
     
-
     return std::vector<uint8_t>(
         std::istreambuf_iterator<char>(file),//begining of the file
         std::istreambuf_iterator<char>()//end of the file
@@ -118,7 +115,6 @@ int main(int argc, char* argv[]) {
     try{
         uint8_t* image=get_source_image(image_path,width,height,channel); //the source file it is a 1d array of rgbrgbrgb
         std::vector<uint8_t> secret = get_secret_file(secret_path); //the secret file
-
 
         std::cout << "Image : " << width << "x" << height << "\n";
         std::cout<<"Size "<<secret.size()<<" Bytes";

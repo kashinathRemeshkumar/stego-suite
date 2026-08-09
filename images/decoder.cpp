@@ -82,7 +82,6 @@ void extract_secret(const uint8_t* image,int height,int width){
     std::vector<uint8_t> secret;
 
     if(header.valid){
-
         std::cout<<"extracting file \n";
         std::cout<<"file name: "<<header.filename <<"\n";
         std::cout<<"file size(bytes) "<<header.file_size<<"\n";
@@ -99,9 +98,6 @@ void extract_secret(const uint8_t* image,int height,int width){
     else{
         throw std::runtime_error("no hidden data found — magic bytes don't match");
     }
-
-
-
 }
 
 
@@ -123,7 +119,6 @@ int main(int argc, char* argv[]) {
     // argv[0] = program name
     // argv[1] = first argument
 
-
     if (argc < 2) {
         std::cerr << "Usage: ./decoder path/to/image.png \n";
         return 1;
@@ -134,14 +129,9 @@ int main(int argc, char* argv[]) {
     int width,height,channel;
     try{
         uint8_t* image=get_source_image(image_path,width,height,channel); //the source file it is a 1d array of rgbrgbrgb
-
-
         std::cout << "Image : " << width << "x" << height << "\n";
-
         extract_secret(image,height,width);
-
         stbi_image_free(image);
-
     }
     catch(std::runtime_error& e){
         std::cerr<<"ERROR " <<e.what()<< "\n";
