@@ -2,6 +2,7 @@
 
 A multi-format steganography toolkit for hiding data inside images, audio, and video files using LSB (Least Significant Bit) manipulation. No encryption included.
 
+# Image
 ## What is LSB Steganography?
 
 Every file on your computer is just a sequence of bytes. Every byte is 8 bits. The least significant bit (the last bit) of each byte contributes almost nothing to the actual value — changing it shifts a number by only 1 out of 255. In an image, that difference is completely invisible to the human eye.
@@ -17,7 +18,7 @@ The secret file is recovered by reading those bits back out and reassembling the
 
 ## Modules
 
-### ✅ Image (C++) — Working
+### Image (C++) — Working
 
 Hides any file inside a PNG image using LSB manipulation on RGB channels.
 
@@ -61,13 +62,60 @@ g++ -std=c++17 -o decoder decoder.cpp
 
 ---
 
-### 🚧 Audio — Not yet finished
+# Audio
 
-LSB steganography in audio files. Work in progress.
+Audio steganography using **Mid/Side (M/S) LSB manipulation**.
+
+The stereo cover audio is converted from Left/Right channels into:
+
+```text
+M = L + R
+S = L - R
+```
+
+The secret audio is then hidden in the **LSBs of the Side (`S`) channel**.
+
+**How it works:**
+
+* Cover audio is decoded to 16-bit PCM using FFmpeg
+* Mono cover audio is duplicated to stereo if necessary
+* Secret audio is downmixed to mono
+* Secret audio is resampled to the cover's sample rate
+* An 80-bit header stores the secret sample count, sample rate, and `K` value
+* The top `K` bits of each secret sample are stored in the bottom `K` bits of the cover's Side channel
+* The modified M/S signal is converted back to Left/Right
+* Output is saved as a lossless 16-bit PCM WAV
+
+**Default:**
+
+```text
+K = 4 bits per sample
+```
+
+The value of `K` can be increased for better secret-audio quality at the cost of greater modification to the cover audio.
+
+**Input formats:**
+Any audio format supported by FFmpeg, including WAV, FLAC, and MP3.
+
+**Output:**
+
+```text
+16-bit PCM WAV
+```
+
+**Important:** MP3 can be used as an input cover, but the resulting stego WAV must **not be re-encoded to MP3**. MP3 is lossy and will destroy the LSB data.
+
+**Dependencies:**
+
+* Python
+* NumPy
+* SciPy
+* FFmpeg / FFprobe
+
 
 ---
 
-### 🚧 Video — Not yet finished
+#🚧 Video — Not yet finished
 
 Steganography using video frames. Currently outputs a checker pattern as a placeholder. Work in progress.
 
